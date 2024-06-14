@@ -14,6 +14,7 @@
 
 - Python 3.x
 - [psutil](https://pypi.org/project/psutil/)：非标准库，用于获取系统运行时的信息，如CPU、内存、磁盘等。
+- Windows操作系统：本工具只能在Windows操作系统下运行。
 
 ## 安装指南
 
