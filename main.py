@@ -8,6 +8,18 @@ import psutil # 这个模块不在python标准库内，需要自行下载安装�
 """
 from os import system, listdir
 from random import randint
+import platform
+
+def checksys():
+    """
+    检查当前是否为Windows环境。
+    如果不是Windows环境，则输出错误信息。
+    """
+    os_name = platform.system()
+    if os_name != "Windows":
+        print(f"该程序无法在{os_name}环境下运行")
+        system("pause")
+        exit(-1)
 
 def warning():
     text="""用户协议
@@ -57,16 +69,21 @@ def getoperationchoice():
 def performoperation(choice):
     if choice == 1:
         disk = input("输入要爆满磁盘的盘符: ")
-        createdirectory(disk)
-        num=0
-        while True:
-            remaining_space = getdiskremaining(disk)
-            if remaining_space == 0:
-                print("目标磁盘已被爆满！")
-                break
-            print(f"剩余空间: {remaining_space} 字节")
-            createfile(disk, remaining_space, num)
-            num+=1
+        if disk.upper()=="C":
+            ans=input("这可能是系统盘，爆满它将会非常危险。是否继续？(y/n) :")
+            if ans.lower()=="y":
+                createdirectory(disk)
+                num=0
+                while True:
+                    remaining_space = getdiskremaining(disk)
+                    if remaining_space == 0:
+                        print("目标磁盘已被爆满！")
+                        break
+                    print(f"剩余空间: {remaining_space} 字节")
+                    createfile(disk, remaining_space, num)
+                    num+=1
+            else:
+                print("操作已取消。")
     elif choice == 2:
         disk = input("输入要恢复磁盘的盘符: ")
         system(f"attrib -s -h {disk}:\\diskkiller")
@@ -108,6 +125,8 @@ def getdiskremaining(disk):
 
 # 主程序入口，循环引导用户进行操作
 if __name__ == '__main__':
+    # 调用函数检查系统环境
+    checksys()
     warning()
     while True:
         choice = getoperationchoice()
