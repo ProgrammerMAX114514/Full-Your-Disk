@@ -1,4 +1,4 @@
-import psutil # 这个模块不在python标准库内，需要自行下载安装，方法如下：
+from psutil import disk_usage, disk_partitions  # 这个模块不在python标准库内，需要自行下载安装，方法如下：
 """
 具体安装方法：
 1.按下win+r键，输入cmd，回车
@@ -6,43 +6,47 @@ import psutil # 这个模块不在python标准库内，需要自行下载安装�
 3.输入pip install psutil 回车
 4.等待下载完成
 """
-from os import system, listdir
+from os import system as cmd
+from os import listdir
 from random import randint
-import platform
+from platform import system
+
 
 def checksys():
     """
     检查当前是否为Windows环境。
     如果不是Windows环境，则输出错误信息。
     """
-    os_name = platform.system()
+    os_name = system()
     if os_name != "Windows":
         print(f"该程序无法在{os_name}环境下运行")
-        system("pause")
+        cmd("pause") 
         exit(-1)
 
+
 def warning():
-    text="""用户协议
+    text = """用户协议
 警告
 该程序具有类似病毒的功能，在运行前请务必备份好所有重要资料文件。
 如非必要，请勿用该程序填充C盘或系统盘，否则可能造成系统崩溃等突发危险状况。
 总之，该工具仅供学习参考，请勿用于非法用途或改编为非法计算机软件，否则可能面临法律问责！
 请仔细阅读上述文本。"""
-    RED_BOLD = '\033[1;31m'
-    RESET = '\033[0m'
-    print(f"{RED_BOLD}{text}{RESET}")
+    red_bold = '\033[1;31m'
+    reset = '\033[0m'
+    print(f"{red_bold}{text}{reset}")
     print("若您同意上述内容，请在下方输入：\"我同意上述用户协议，并自愿承担运行后造成的所有后果。\"")
     print("若不同意，按CTRL+C退出程序。")
-    ans=input("请输入：")
+    ans = input("请输入：")
     if ans == "我同意上述用户协议，并自愿承担运行后造成的所有后果。":
         print("已同意用户协议。")
         print("请回答下列问题，以确认你是人类。")
-        a=randint(1,100)
-        b=randint(1,100)
-        correctans=a+b
-        userans=input(f"{a} + {b} = ")
+        a = randint(1, 100)
+        b = randint(1, 100)
+        correctans = a + b
+        userans = input(f"{a} + {b} = ")
         if int(userans) == correctans:
             print("回答正确，继续运行。")
+            cmd("cls") 
         else:
             print("回答错误，程序退出。")
             exit(-1)
@@ -64,64 +68,79 @@ def getoperationchoice():
             return 3
         else:
             print("输入错误，请重新输入")
+            cmd("pause")
+
 
 # 根据用户选择执行对应的操作，包括填充磁盘和恢复磁盘空间
 def performoperation(choice):
     if choice == 1:
         disk = input("输入要爆满磁盘的盘符: ")
-        if disk.upper()=="C":
-            ans=input("这可能是系统盘，爆满它将会非常危险。是否继续？(y/n) :")
-            if ans.lower()=="y":
-                createdirectory(disk)
-                num=0
-                while True:
-                    remaining_space = getdiskremaining(disk)
-                    if remaining_space == 0:
-                        print("目标磁盘已被爆满！")
-                        break
-                    print(f"剩余空间: {remaining_space} 字节")
-                    createfile(disk, remaining_space, num)
-                    num+=1
+        if disk.upper() == "C":
+            ans = input("这可能是系统盘，爆满它将会非常危险。是否继续？(y/n) :")
+            if ans.lower() == "y":
+                dokill=True
             else:
-                print("操作已取消。")
+                dokill=False
+        else:
+            dokill=True
+        if dokill:
+            createdirectory(disk)
+            num = 0
+            while True:
+                remaining_space = getdiskremaining(disk)
+                if remaining_space == 0:
+                    print("目标磁盘已被爆满！")
+                    break
+                print(f"剩余空间: {remaining_space} 字节")
+                createfile(disk, remaining_space, num)
+                num += 1
+        else:
+            print("操作已取消。")
     elif choice == 2:
         disk = input("输入要恢复磁盘的盘符: ")
-        system(f"attrib -s -h {disk}:\\diskkiller")
-        system(f"del /q {disk}:\\diskkiller\\*")
-        system(f"rmdir {disk}:\\diskkiller")
+        cmd(f"attrib -s -h {disk}:\\diskkiller") 
+        cmd(f"del /q {disk}:\\diskkiller\\*") 
+        cmd(f"rmdir {disk}:\\diskkiller") 
         print("磁盘已恢复")
     else:
         exit()
+    cmd("pause")
+    cmd("cls")
+
 
 # 在指定磁盘上创建一个隐藏目录，用于后续填充磁盘空间
 def createdirectory(disk):
     if not "diskkiller" in listdir(disk + ":\\"):
-        system(f"mkdir {disk}:\\diskkiller")
-    system(f"attrib +s +h {disk}:\\diskkiller")
+        cmd(f"mkdir {disk}:\\diskkiller") 
+    cmd(f"attrib +s +h {disk}:\\diskkiller") 
+
 
 # 在指定目录下创建一个大文件，用于消耗磁盘空间
 def createfile(disk, size, num):
     file = f"{disk}:\\diskkiller\\{num}"
     command = f"fsutil file createnew {file} {size}"
-    system(command)
+    cmd(command) 
+
 
 # 获取指定磁盘的剩余空间
 def getdiskremaining(disk):
     # 检查磁盘盘符是否有效
-    if disk.upper() not in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']:
+    if disk.upper() not in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']:
         raise ValueError(f"无效盘符：{disk}")
     # 获取磁盘使用信息
-    partitions = psutil.disk_partitions()
+    partitions = disk_partitions()
     for partition in partitions:
         # 查找指定盘符的分区信息
         if partition.mountpoint.startswith(disk + ":\\"):
             # 获取磁盘使用统计
-            usage = psutil.disk_usage(partition.mountpoint)
+            usage = disk_usage(partition.mountpoint)
             # 返回剩余空间（字节）
             return usage.free
 
     # 如果没有找到对应的磁盘分区，抛出异常
     raise ValueError(f"没有指定的磁盘: {disk}")
+
 
 # 主程序入口，循环引导用户进行操作
 if __name__ == '__main__':
