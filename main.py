@@ -1,12 +1,18 @@
+from ast import Import
+
+
 try:
-    from psutil import disk_usage, disk_partitions  # 这个模块不在python标准库内，需要自行下载安装，方法如下：
-    """
-    具体安装方法：
-    1.按下win+r键，输入cmd，回车
-    2.输入pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 回车(可选操作，这可以极大提升下载速度)
-    3.输入pip install psutil 回车
-    4.等待下载完成
-    """
+    try:
+        from psutil import disk_usage, disk_partitions  # 这个模块不在python标准库内，需要自行下载安装。
+    except ImportError:
+        print("无法导入psutil模块，请确认psutil模块是否安装成功。")
+        help_text="""具体安装方法：
+        1.按下win+r键，输入cmd，回车
+        2.输入pip install psutil回车
+          若国外源下载过慢，可以使用清华镜像源：pip install -i https://pypi.tuna.tsinghua.edu.cn/simple psutil
+        3.等待下载完成
+        """
+        print(help_text)
     from os import system as cmd
     from os import remove,rmdir
     from os import listdir
@@ -168,13 +174,7 @@ except Exception as e:
         print("用户中断，程序退出。")
         exit(0)
     elif isinstance(e, ImportError):
-        print("缺少依赖库，请安装依赖库后重试。")
-        print("可能缺失的依赖库:psutil,platform")
-        print("请使用pip安装依赖库。")
-        print("pip install psutil")
-        print("pip install platform")
-        cmd("pause")
-        exit(-1)
+        print("缺少依赖库，请确认您已安装Python和必要的库。")
     elif isinstance(e,FileNotFoundError):
         print("找不到文件，请检查文件是否存在。")
         cmd("pause")
@@ -185,8 +185,7 @@ except Exception as e:
         cmd("pause")
         exit(-1)
     else:
-        print("发生未知错误，请检查错误信息并联系开发者寻求帮助。")
-        print(e)
+        print(f"发生未知错误{e}，请检查错误信息并联系开发者寻求帮助。")
         cmd("pause")
         exit(-1)
     
