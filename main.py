@@ -1,6 +1,3 @@
-from ast import Import
-
-
 try:
     try:
         from psutil import disk_usage, disk_partitions  # 这个模块不在python标准库内，需要自行下载安装。
@@ -19,7 +16,8 @@ try:
     from random import randint
     from platform import system
 
-    version="v0.3.0"
+    cmd("title 磁盘爆满工具")
+    version="v0.4.0"
 
     def checksys():
         """
@@ -34,7 +32,8 @@ try:
 
 
     def warning():
-        text = """用户协议
+        print("用户协议",end="")
+        text = """
     警告
     该程序具有类似病毒的功能，在运行前请务必备份好所有重要资料文件。
     如非必要，请勿用该程序填充C盘或系统盘，否则可能造成系统崩溃等突发危险状况。
