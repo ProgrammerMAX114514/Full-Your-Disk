@@ -16,7 +16,7 @@ from random import randint
 from platform import system
 
 cmd("title 磁盘爆满工具")
-version="v0.4.0"
+version="v0.3.0"
 
 def checksys():
     """
