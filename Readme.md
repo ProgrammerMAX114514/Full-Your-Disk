@@ -21,20 +21,24 @@
 
 1. **确保Python 3.x已安装**。可以在[Python官网](https://www.python.org/downloads/)下载安装。
 2. 打开命令行工具（Windows用户可以按`Win + R`，输入`cmd`后回车）。
-3. （可选，但推荐）为了加速下载，可以设置pip使用国内镜像源，如清华大学镜像源：
-   `pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple`
-4. 安装`psutil`库：
-   `pip install psutil`
-
+3. 安装`psutil`库：
+   ```bash
+   pip install psutil
+   ```
+   国内用户可以使用镜像源：
+   ```bash
+   pip install -i https://pypi.tuna.tsinghua.edu.cn/simple psutil
+   ```
 ### 使用说明
 
 1. 将本项目克隆到本地：
-   `git clone https://github.com/ProgrammerMAX114514/Full-Your-Disk.git`
 2. 进入项目目录：
-   `cd Full-Your-Disk`
 3. 运行脚本：
-   `python main.py`
-
+   ```bash
+   git clone https://github.com/ProgrammerMAX114514/Full-Your-Disk.git
+   cd Full-Your-Disk
+   python main.py
+   ```
 4. 按照提示操作即可。
 
 ## 注意事项
