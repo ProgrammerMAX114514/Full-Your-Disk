@@ -16,7 +16,7 @@ from random import randint
 from platform import system
 
 cmd("title 磁盘爆满工具")
-version="v0.3.0"
+version="v0.4.0"
 
 def checksys():
     """
@@ -108,7 +108,7 @@ def performoperation(choice):
     elif choice == 2:
         disk = input("输入要恢复磁盘的盘符: ")
         cmd(f"attrib -s -h {disk}:\\diskkiller") 
-        remove(f"{disk}:\\diskkiller\\*") 
+        cmd(f"del /q {disk}:\\diskkiller\\*") 
         rmdir(f"{disk}:\\diskkiller") 
         print("磁盘已恢复")
     else:
@@ -146,7 +146,7 @@ def getdiskremaining(disk):
     partitions = disk_partitions()
     for partition in partitions:
         # 查找指定盘符的分区信息
-        if partition.mountpoint.startswith(disk + ":\\"):
+        if partition.mountpoint.startswith(f"{disk}:\\"):
             # 获取磁盘使用统计
             usage = disk_usage(partition.mountpoint)
             # 返回剩余空间（字节）
