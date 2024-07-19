@@ -13,22 +13,10 @@ from os import system as cmd
 from os import remove,rmdir
 from os import listdir
 from random import randint
-from platform import system
+from checksys import *
 
 cmd("title 磁盘爆满工具")
 version="v0.4.0"
-
-def checksys():
-    """
-    检查当前是否为Windows环境。
-    如果不是Windows环境，则输出错误信息。
-    """
-    os_name = system()
-    if os_name != "Windows":
-        print(f"该程序无法在{os_name}环境下运行")
-        cmd("pause") 
-        exit(-1)
-
 
 def warning():
     print("用户协议",end="")
