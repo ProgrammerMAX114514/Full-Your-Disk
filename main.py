@@ -19,12 +19,6 @@ from checksys import *
 cmd("title 磁盘爆满工具")
 version="v0.4.0"
 
-# 在指定磁盘上创建一个隐藏目录，用于后续填充磁盘空间
-def createdirectory(disk):
-    if not "diskkiller" in listdir(disk + ":\\"):
-        cmd(f"mkdir {disk}:\\diskkiller") 
-    cmd(f"attrib +s +h {disk}:\\diskkiller") 
-
 
 # 在指定目录下创建一个大文件，用于消耗磁盘空间
 def createfile(disk, size, num):

@@ -1,5 +1,6 @@
 from os import system as cmd
 from os import rmdir
+from createdirectory import *
 
 # 根据用户选择执行对应的操作，包括填充磁盘和恢复磁盘空间
 def performoperation(choice):
