@@ -40,3 +40,5 @@ def performoperation(choice):
     cmd("pause")
     cmd("cls")
 
+if __name__ == "__main__":
+    print("你不应该直接运行此文件。")

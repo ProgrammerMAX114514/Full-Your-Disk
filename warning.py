@@ -31,3 +31,6 @@ def warning():
     else:
         print("用户协议未同意，程序退出。")
         exit(-1)
+
+if __name__ == "__main__":
+    warning()

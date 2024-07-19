@@ -29,3 +29,5 @@ def getdiskremaining(disk):
     # 如果没有找到对应的磁盘分区，抛出异常
     raise ValueError(f"没有指定的磁盘: {disk}")
 
+if __name__ == "__main__":
+    print("你不应该直接运行此文件。")

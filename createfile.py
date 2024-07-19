@@ -11,4 +11,5 @@ def createfile(disk, size, num):
         print(f"创建文件{file}失败，错误码为{ret_code}。您的系统可能没有fsutil命令或格式不兼容。请联系开发者寻求帮助")
         cmd("pause") 
 
-
+if __name__ == "__main__":
+    print("你不应该直接运行此文件。")

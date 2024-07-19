@@ -11,3 +11,6 @@ def checksys():
         print(f"该程序无法在{os_name}环境下运行")
         cmd("pause") 
         exit(-1)
+
+if __name__ == "__main__":
+    checksys()

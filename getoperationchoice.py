@@ -16,3 +16,6 @@ def getoperationchoice(version):
         else:
             print("输入错误，请重新输入")
             cmd("pause")
+
+if __name__ == "__main__":
+    print("你不应该直接运行此文件。")

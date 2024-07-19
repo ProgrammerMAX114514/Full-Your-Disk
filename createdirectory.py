@@ -6,3 +6,6 @@ def createdirectory(disk):
     if not "diskkiller" in listdir(disk + ":\\"):
         cmd(f"mkdir {disk}:\\diskkiller") 
     cmd(f"attrib +s +h {disk}:\\diskkiller") 
+
+if __name__ == "__main__":
+    print("你不应该直接运行此文件。")
