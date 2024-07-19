@@ -100,5 +100,5 @@ if __name__ == '__main__':
     checksys()
     warning()
     while True:
-        choice = getoperationchoice()
+        choice = getoperationchoice(version)
         performoperation(choice)
