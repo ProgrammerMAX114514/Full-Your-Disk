@@ -1,6 +1,4 @@
 from warning import *
-from os import remove,rmdir
-from os import listdir
 from getoperationchoice import *
 from performoperation import *
 from checksys import *
